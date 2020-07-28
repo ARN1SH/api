@@ -1,0 +1,437 @@
+FORMAT: 1A
+HOST: http://xvs.tt
+
+
+# Info
+
+
+XVideoSharing API
+
+# Group Account
+
+My Account functions
+
+## Account Info [/api/account/info?key={key}]
+
+### Account Info [GET /api/account/info?key={key}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+
++ Response 200 (application/json)
+
+        {
+            "msg": "OK",
+            "server_time": "2017-08-11 04:30:07",
+            "status": 200,
+            "result": {
+                "email": "myemail@gmail.com",
+                "balance": "0.00000",
+                "storage_used" :"24186265",
+                "storage_left": 128824832615,
+                "premim_expire": "2015-10-24 21:00:00
+            }
+        }
+
+## Account Stats [/api/account/stats?key={key}]
+
+### Account Stats [GET /api/account/stats?key={key}&last={last}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + last (number,optional) - show stats for last X days
+        + Default: `7`
+
++ Response 200 (application/json)
+
+        {
+            "msg": "OK",
+            "server_time": "2017-08-11 04:30:07",
+            "status": 200,
+            "result": [
+                {
+                    "downloads":"0",
+                    "profit_views":"0.00000",
+                    "views_adb":"1",
+                    "sales":"0",
+                    "profit_sales":"0.00000",
+                    "profit_refs":"0.00000",
+                    "profit_site":"0.00000",
+                    "views":"0",
+                    "refs":"0",
+                    "day":"2017-09-12",
+                    "profit_total":"0.00000",
+                    "views_prem":"0"
+                }
+            ]
+        }
+
+
+
+# Group Upload
+
+## Upload by URL [/api/upload/url]
+
+### Add URL to upload queue [GET /api/upload/url?key={key}&url={url}]
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + url: http://site.com/v.mkv (url) - URL to video file
+    
++ Response 200 (application/json)
+
+        {
+            "msg": "OK",
+            "server_time": "2017-08-11 04:29:54",
+            "status": 200,
+            "result": {"filecode": "jthi5jdsu8t9"}
+        }
+        
+## Upload Server [/api/upload/server]
+
+Shortest sample video upload form:
+
+\<form enctype="multipart/form-data" action="http://s1.xvs.tt/upload/01" method="post"\><br>
+\<input type="hidden" name="api_key" value="1l5ftrilhllgwx2bo"\><br>
+\<input name="file" type="file"\><br>
+<input type="submit"\><br>
+\</form\>
+    
+### Get next Upload Server URL [GET /api/upload/server?key={key}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+
++ Response 200 (application/json)
+
+        {
+            "msg": "OK",
+            "server_time": "2017-08-11 04:29:54",
+            "status": 200,
+            "result": "http://s1.xvs.tt/upload/01"
+        }
+
+        
+# Group File
+
+## File Info [/api/file/info]
+
+### Get info/check file(s) [GET /api/file/info?key={key}&file_code={file_code}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + file_code: gi4o0tlro01u,gi4o0tlro012 (string) - file code, or list separated by comma
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":[
+                        {
+                            "status":200,
+                            "filecode":"gi4o0tlro01u",
+                            "name":"4K Time Lapse in the EOS 6D Mark II",
+                            "canplay":1,
+                            "views_started":"1",
+                            "views":"0",
+                            "length":"20",
+                            "uploaded":"2017-08-10 05:07:17"
+                        },
+                        {
+                            "status":404,
+                            "filecode":"gi4o0tlro012"
+                        }
+                    ]
+        }
+        
+## File List [/api/file/list]
+
+### Get files list [GET /api/file/list{?key,page,per_page,fld_id,public,created,title}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + page: 2 (optional,number) - page number
+    + per_page: 20 (optional,number) - number of results per page
+    + fld_id: 15 (optional,number) - folder id
+    + public: 1 (optional,number) - show public (1) or private (0) files only
+    + created: `2018-06-21 05:07:10` (optional,string) - show only files uploaded after timestamp. Specify number to show only files uploaded X minutes ago.
+    + title: `Iron man` (optional,string) - filter video titles
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":[
+                        {
+                            "status":200,
+                            "filecode":"gi4o0tlro01u",
+                            "name":"4K Time Lapse in the EOS 6D Mark II",
+                            "canplay":1,
+                            "views_started":"1",
+                            "views":"0",
+                            "length":"20",
+                            "uploaded":"2017-08-10 05:07:17"
+                        },
+                        {
+                            "status":404,
+                            "filecode":"gi4o0tlro012"
+                        }
+                    ]
+        }
+        
+## File Rename [/api/file/rename]
+
+### Get info/check file(s) [GET /api/file/rename?key={key}&file_code={file_code}&title={title}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + file_code: gi4o0tlro01u,gi4o0tlro012 (string) - file code, or list separated by comma
+    + title: cool video (string) - new file title
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":[
+                        {
+                            "status":200,
+                            "filecode":"gi4o0tlro01u",
+                            "name":"4K Time Lapse in the EOS 6D Mark II",
+                            "canplay":1,
+                            "views_started":"1",
+                            "views":"0",
+                            "length":"20",
+                            "uploaded":"2017-08-10 05:07:17"
+                        },
+                        {
+                            "status":404,
+                            "filecode":"gi4o0tlro012"
+                        }
+                    ]
+        }
+        
+## File Clone [/api/file/clone]
+
+### Clone file [GET /api/file/clone?key={key}&file_code={file_code}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + file_code: gi4o0tlro01u,gi4o0tlro012 (string) - file code
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":
+            {
+                "filecode":"gtl2mhgw4is7",
+                "url":"http://xvs.tt/gtl2mhgw4is7"
+            }
+        }
+
+## File Direct Link [/api/file/direct_link]
+
+### Get link to selected quality [GET /api/file/direct_link?key={key}&file_code={file_code}&q={q}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + file_code: gi4o0tlro01u (string) - file code
+    + q (string)
+        video quality if exist
+        + Values
+            + `n`
+            + `h`
+            + `l`
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":"http://s1.xvs.tt/zqscczdqtpmokkcvalhzmsedk2cz5dsbq/v.mp4"
+        }
+
+### Get links to all available qualities [GET /api/file/direct_link?key={key}&file_code={file_code}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + file_code: gi4o0tlro01u (string) - file code
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":
+            {
+                "h": {"url":"http://s1.xvs.tt/okkcvkkhrqupalhzmsedl4cz5dsbq/v.mp4","size":"3503903"},
+                "n": {"url":"http://s1.xvs.tt/okkcvkkhrqupalhzmsedl4cz5dsdq/v.mp4","size":"1363737"},
+                "o": {"url":"http://s1.xvs.tt/okkcvkkhrqipalhzmsedplzb6yoeq/v.mp4","size":"8493208"}
+            }
+        }
+
+## File Set Folder [/api/file/set_folder]
+
+### Set file(s) folder [GET /api/file/set_folder?key={key}&file_code={file_code}&fld_id={fld_id}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + file_code: gi4o0tlro01u,gi4o0tlro012 (string) - file code, or list separated by comma
+    + fld_id: 15 (number) - folder id
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200
+        }
+
+# Group Folder
+
+## Folder List [/api/folder/list]
+
+### Get folder/file list [GET /api/folder/list?key={key}&fld_id={fld_id}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + fld_id: 15 (optional,number) - folder id
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":
+            {
+                    "folders":
+                    [
+                            {
+                                "name":"Sub1",
+                                "fld_id":"24"
+                            }
+                    ],
+                    "files":
+                    [
+                            {
+                                "link":"http://xvs.tt/4w0sy8e63f0c.html",
+                                "uploaded":"2017-07-18 04:06:39",
+                                "file_code":"4w0sy8e63f0c",
+                                "fld_id":"16",
+                                "title":"000 video sample2 s",
+                                "canplay":0
+                            }
+                    ]
+            }
+        }
+        
+## Create Folder [/api/folder/create]
+
+### Create new folder [GET /api/folder/create?key={key}&parent_id={parent_id}&name={name}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + parent_id: 15 (optional,number) - parent folder id
+    + name: New Folder (string) - folder name
+
++ Response 200 (application/json)
+
+        {
+            "msg": "OK",
+            "server_time": "2017-08-11 04:28:53",
+            "status": 200,
+            "result":
+            {
+                "fld_id": "26"
+            }
+        }
+        
+## Rename Folder [/api/folder/rename]
+
+### Rename folder [GET /api/folder/rename?key={key}&fld_id={fld_id}&name={name}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + fld_id: 15 (number) - folder id
+    + name: New Folder (string) - folder name
+
++ Response 200 (application/json)
+
+        {
+            "msg": "OK",
+            "server_time": "2017-08-11 04:28:53",
+            "status": 200,
+            "result": "true"
+        }
+
+# Group Files
+
+## Deleted Files [/api/files/deleted]
+
+### Get last files deleted [GET /api/files/deleted?key={key}&last={last}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + last: 20 (optional,number) - number of files limit
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":
+            [
+                {
+                    "file_code":"gtl2mhgw4is7",
+                    "title":"New title",
+                    "deleted":"2017-08-11 20:00:01",
+                    "deleted_ago_sec":"194316"
+                },
+                {
+                    "file_code":"uoyagho8c707",
+                    "title":"000-video-sample2s",
+                    "deleted":"2017-08-10 20:30:02"
+                    "deleted_ago_sec":"278915"
+                }
+            ]
+        }
+        
+## DMCA Files [/api/files/dmca]
+    This works with DMCA mod enabled
+    
+### Get files scheduled for DMCA delete [GET /api/files/dmca?key={key}&last={last}]
+
++ Parameters
+    + key: 1l5ftrilhllgwx2bo (string) - API key
+    + last: 20 (optional,number) - number of files limit
+
++ Response 200 (application/json)
+
+        {
+            "msg":"OK",
+            "server_time":"2017-08-11 04:28:53",
+            "status":200,
+            "result":
+            [
+                {
+                    "file_code":"gtl2mhgw4is7",
+                    "del_time":"2017-08-11 16:31:53"
+                },
+                {
+                    "file_code":"uoyagho8c707",
+                    "del_time":"2017-08-11 16:30:23"
+                }
+            ]
+        }
+            
